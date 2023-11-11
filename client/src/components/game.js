@@ -8,7 +8,6 @@ export default function Game({ cleanup }) {
   const [fen, setFen] = useState(chess.fen()); // <- 2
   const [over, setOver] = useState("");
     
-   
   // makeAMove function
   const makeAMove = useCallback(
     (move) => {
@@ -60,7 +59,7 @@ export default function Game({ cleanup }) {
   return (
     <>
       <div className="board">
-        <Chessboard position={fen} onPieceDrop={onDrop} />  {/**  <- 4 */}
+        <Chessboard position={fen} onPieceDrop={onDrop} boardWidth={500}/>  {/**  <- 4 */}
       </div>
       <CustomDialog // <- 5
         open={Boolean(over)}
