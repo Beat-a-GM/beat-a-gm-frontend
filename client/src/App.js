@@ -5,7 +5,6 @@ import { Route, Routes } from "react-router-dom";
 const App = () => {
   return (
     <div>
-       <Navibar />
       <Routes>
         <Route exact path="/" element={<RecordList />} />
        
