@@ -1,14 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div>
+       <Navibar />
+      <Routes>
+        <Route exact path="/" element={<RecordList />} />
        
-      </header>
+      </Routes>
     </div>
   );
-}
-
-export default App;
+ };
+  export default App;
