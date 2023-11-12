@@ -69,3 +69,15 @@ app.get('/puzzles', async (req, res) => {
 app.listen(port, () => {
   console.log(`Listening on ${port}`);
 });
+
+const Position = {
+  FEN: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+  Eval: 0.5,
+  WhiteName: 'Magnus Carlsen',
+  BlackName: 'Fabiano Caruana',
+  Moves: '{"e4": ["Stockfish line 1", "Stockfish line 2"], "c5": ["Stockfish line 3"]}',
+  MovePlayed: 'e4',
+  GameDescription: 'Sample game description',
+};
+const insertPosition = require("./insertPosition")
+//insertPosition(pool, Position)

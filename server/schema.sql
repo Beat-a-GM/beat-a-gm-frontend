@@ -1,5 +1,5 @@
 -- schema.sql
-CREATE DATABASE chessdb;
+--CREATE DATABASE chessdb;
 USE chessdb;
 -- Create the Positions table
 CREATE TABLE Positions (
@@ -23,7 +23,7 @@ CREATE TABLE Positions (
     Moves TEXT,
 
     -- The move that Magnus, Hikaru, or Fabiano played.
-    MovePlayed VARCHAR(10) NOT NULL,
+    MovePlayed VARCHAR(10) NOT NULL DEFAULT '',
 
     GameDescription TEXT
 );
