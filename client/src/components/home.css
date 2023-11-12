@@ -1,0 +1,24 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+    height: 100vh;
+  }
+  
+
+  .play-button {
+    background-color: #007bff;
+    color: #fff;
+    font-size: 24px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 70%;
+  }
+  
+  .play-button:hover {
+    background-color: #0056b3;
+  }
