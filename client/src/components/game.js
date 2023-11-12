@@ -35,7 +35,7 @@ function setPoint(point) {
 }
 
 
-export default function Game({ inputFEN, bestMove, opponentResponses }) {
+export default function Game({ inputFEN, bestMove, GMmove }) {
   if( inputFEN == null ){
     inputFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
   }
@@ -58,7 +58,7 @@ export default function Game({ inputFEN, bestMove, opponentResponses }) {
         setUserMove(compareFEN(originalFEN, userMoveFEN));
         
         if (move == bestMove) {
-          setOver("You chose the best move!");
+          setOver("Stockfish agrees with you!!");
           setPoint(point + 50);
         } 
   
@@ -96,10 +96,12 @@ export default function Game({ inputFEN, bestMove, opponentResponses }) {
         <Chessboard position={fen} onPieceDrop={onDrop} boardWidth={650}/>  
       </div>
       <Sidebar
-        whitePlayer="White Player"
-        blackPlayer="Black Player"
+        whitePlayer="Hikaru"
+        blackPlayer="MagnusCarlsen"
         userMove={userMove}
         point={point}
+        stockFishMove={bestMove}
+        gmMove={GMmove}
       />
     </div>
       <CustomDialog 

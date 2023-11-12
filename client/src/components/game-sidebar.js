@@ -7,7 +7,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { styled } from '@mui/joy/styles';
 import "./game-sidebar.css";
 
-const Sidebar = ({ whitePlayer, blackPlayer,userMove,point }) => {
+const Sidebar = ({ whitePlayer, blackPlayer,userMove,point, stockFishMove, gmMove }) => {
     const Item = styled(Sheet)(({ theme }) => ({
         ...theme.typography['body-sm'],
         textAlign: 'center',
@@ -20,8 +20,7 @@ const Sidebar = ({ whitePlayer, blackPlayer,userMove,point }) => {
     }));
     const [submitEnabled, setSubmitEnabled] = useState(false);
     const [showMoves, setShowMoves] = useState(false);
-    const [gmMove, setGmMove] = useState('');
-    const [stockFishMove, setStockFishMove] = useState('');
+
 
     useEffect(() => {
         if (!!userMove) {
@@ -32,13 +31,6 @@ const Sidebar = ({ whitePlayer, blackPlayer,userMove,point }) => {
     const handleSubmit = () => {
         setSubmitEnabled(false);
         setShowMoves(true);
-
-            //placeholders for api integration to verify
-            // the submit button is working as intended
-            const newGmMove = Math.floor(Math.random() * 100) + 1;
-            const newStockFishMove = Math.floor(Math.random() * 100) + 1;
-            setGmMove(newGmMove); 
-            setStockFishMove(newStockFishMove);
 
         }
     return (
