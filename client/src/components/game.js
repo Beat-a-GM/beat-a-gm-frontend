@@ -4,8 +4,8 @@ import { Chess } from "chess.js";
 import CustomDialog from "./customdialog";
 
 export default function Game({ cleanup }) {
-  const chess = useMemo(() => new Chess(), []); // <- 1
-  const [fen, setFen] = useState(chess.fen()); // <- 2
+  const chess = useMemo(() => new Chess(), []); 
+  const [fen, setFen] = useState(chess.fen()); 
   const [over, setOver] = useState("");
     
   // makeAMove function
