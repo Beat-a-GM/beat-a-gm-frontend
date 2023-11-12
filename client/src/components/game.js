@@ -52,7 +52,6 @@ export default function Game({ inputFEN, bestMove, GMmove }) {
   const [over, setOver] = useState("");
   let userMoveFEN = "";
   const [userMove, setUserMove] = useState("");
-  const [point, setPoint] = useState(0);
 
   // makeAMove function
   let originalFEN = inputFEN;
@@ -64,14 +63,6 @@ export default function Game({ inputFEN, bestMove, GMmove }) {
         setFen(chess.fen()); // update fen state to trigger a re-render
         userMoveFEN = chess.fen();
         setUserMove(compareFEN(originalFEN, userMoveFEN));
-        
-        if (move == bestMove) {
-          setOver("Stockfish agrees with you!!");
-          setPoint(point + 50);
-        } 
-  
-        
-  
         return result;
       } catch (e) {
         return null;
@@ -107,7 +98,6 @@ export default function Game({ inputFEN, bestMove, GMmove }) {
         whitePlayer="Hikaru"
         blackPlayer="MagnusCarlsen"
         userMove={userMove}
-        point={point}
         stockFishMove={bestMove}
         gmMove={GMmove}
       />

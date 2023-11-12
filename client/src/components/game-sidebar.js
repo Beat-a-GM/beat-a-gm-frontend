@@ -7,7 +7,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { styled } from '@mui/joy/styles';
 import "./game-sidebar.css";
 
-const Sidebar = ({ whitePlayer, blackPlayer,userMove,point, stockFishMove, gmMove }) => {
+const Sidebar = ({ whitePlayer, blackPlayer,userMove,stockFishMove, gmMove }) => {
     const Item = styled(Sheet)(({ theme }) => ({
         ...theme.typography['body-sm'],
         textAlign: 'center',
@@ -21,7 +21,7 @@ const Sidebar = ({ whitePlayer, blackPlayer,userMove,point, stockFishMove, gmMov
     const [submitEnabled, setSubmitEnabled] = useState(false);
     const [showMoves, setShowMoves] = useState(false);
 
-
+    let points = 0;
 
     useEffect(() => {
         if (!!userMove) {
@@ -32,13 +32,15 @@ const Sidebar = ({ whitePlayer, blackPlayer,userMove,point, stockFishMove, gmMov
     const handleSubmit = () => {
         setSubmitEnabled(false);
         setShowMoves(true);
+        points += (userMove === gmMove ? 50 : 0);
+        points += (userMove === stockFishMove ? 50 : 0);
 
         }
     return (
         <div className="sidebar">
             <Stack spacing={1}>
                 <Item><h2>Current Points</h2>
-                    <div className="printer">{point}</div></Item>
+                    <div className="printer">{points}</div></Item>
                 <Item>
                     <img src={getImage(blackPlayer)} alt="black player" width="100px" />
                     <p>Black: {blackPlayer}</p>
