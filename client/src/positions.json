@@ -1,0 +1,29 @@
+{
+    "Positions": [
+    {
+    "GMMove": "Ne4",
+    "Position": "r1b2rk1/1p1nqpb1/p2p1np1/2pP2Bp/P1N4P/2N3P1/1P1QPPB1/R3K2R w KQ - 2 16",
+    "StockfishMove": "c3e4"
+  },
+  {
+    "GMMove": "Kh2",
+    "Position": "3rr1k1/ppqn1ppn/2p5/2b1pPP1/4P3/5N2/PPP1Q1B1/R1BR2K1 w - - 1 20",
+    "StockfishMove": "g1h1"
+  },
+  {
+    "GMMove": "Rac1",
+    "Position": "r3r1k1/3n1ppp/bpp5/p1q5/3NPP2/6PP/PQ4B1/R2R2K1 w - - 1 25",
+    "StockfishMove": "e4e5"
+  },
+  {
+    "GMMove": "Qd3",
+    "Position": "rq1r2k1/3nppbp/3p1np1/1pP5/pP1P3N/B3P3/4BPPP/1R1Q1RK1 w - - 3 16",
+    "StockfishMove": "c5c6"
+  },
+  {
+    "GMMove": "Rad1",
+    "Position": "2rr3k/ppqnbppp/4p2n/2p1P3/2P1N1P1/1P3N1P/PB2QP2/R4RK1 w - - 3 18",
+    "StockfishMove": "a1d1"
+  }
+]
+}

@@ -35,14 +35,15 @@ app.get('/fill-db', async (req, res) => {
     const apiResponse = await axios.get(apiUrl);
     const regex = /\[Event[^\]]*]([\s\S]*?0-1)[\s\S]*?(?=\[Event|$)/g;
     const matches = apiResponse.data.match(regex).slice(0, 50);
-    console.log("matches?", matches);
+    //console.log("matches?", matches);
 
     for (let match of matches) {
       const moveOrderWhite = filterMoves(match, true);
       const moveOrderBlack = filterMoves(match, false);
-      console.log(moveOrderWhite, moveOrderBlack);
+      //console.log(moveOrderWhite, moveOrderBlack);
 
-      await axios.post('http://127.0.0.1:5000/construct', { whiteMoves: moveOrderWhite, blackMoves: moveOrderBlack });
+      const res = await axios.post('http://127.0.0.1:5000/construct', { whiteMoves: moveOrderWhite, blackMoves: moveOrderBlack });
+      console.log(res.data)
     }
 
     res.send('Data processed successfully');
