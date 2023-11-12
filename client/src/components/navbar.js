@@ -6,13 +6,13 @@ import "react-router-dom";
 
 export default function ChessNavbar() {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar bg="dark" data-bs-theme="dark" expand="lg" className="bg-body-tertiary">
       <Container fluid>
         <div style={{ display: "flex", alignItems: "center" }}>
           <img
             width="35vh"
             style={{ marginRight: "5px", marginLeft: "5px" }}
-            src="https://github.com/DK-Kim4312/images/blob/main/chess_image.png?raw=true"
+            src="https://github.com/DK-Kim4312/images/blob/main/logo_chess_BGM.png?raw=true"
             alt="Chess Logo"
           />
           <Navbar.Brand href="/">Beat a GM</Navbar.Brand>
@@ -26,7 +26,7 @@ export default function ChessNavbar() {
 
 
               {/* News Button */}
-              <Nav.Link href="/news">News</Nav.Link>
+              <Nav.Link href="/AboutUs">About Us</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </div>
