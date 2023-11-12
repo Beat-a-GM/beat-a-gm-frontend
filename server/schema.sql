@@ -18,13 +18,30 @@ CREATE TABLE Positions (
     -- Black player's name
     BlackName VARCHAR(100) NOT NULL,
 
-    --Moves TODO
-    Moves TEXT
+    /*Moves is a JSON serializible list of move names to a 
+    list of the resulting Stockfish lines*/
+    Moves TEXT,
+
+    -- The move that Magnus, Hikaru, or Fabiano played.
+    MovePlayed VARCHAR(10) NOT NULL,
+
+    GameDescription TEXT
 );
 
 INSERT INTO Positions (FEN, Eval, WhiteName, BlackName, Moves)
 VALUES 
-("ALKJDSL:GKJ", 1.5, "Magnus Carlsen", "Hikaru Nakamura", '{
-  "Nc4": ["e5", "e6", "Nxf6", "Ke4", "Qe2"],
-  "e6": ["e5", "e6", "Nxf6", "Ke4", "Qe2"]
-}');
+("ALKJDSL:GKJ", 1.5, "Magnus Carlsen", "Hikaru Nakamura", 
+'{"Nc4": {eval:1.0,line:["e5", "e6", "Nxf6", "Ke4", "Qe2"]},"e6": {eval:1.5,line:["e5", "e6", "Nxf6", "Ke4", "Qe2"]}}'
+);
+
+INSERT INTO Positions (FEN, Eval, WhiteName, BlackName, Moves)
+VALUES 
+("ALKJDSL:GKJ", 1.0, "Magnus Carlsen", "Hikaru Nakamura", 
+'{"Nc4": {eval:1.0,line:["e5", "e6", "Nxf6", "Ke4", "Qe2"]},"e6": {eval:1.5,line:["e5", "e6", "Nxf6", "Ke4", "Qe2"]}}'
+);
+
+INSERT INTO Positions (FEN, Eval, WhiteName, BlackName, Moves)
+VALUES 
+("ALKJDSL:GKJ", 0.5, "Magnus Carlsen", "Hikaru Nakamura", 
+'{"Nc4": {eval:1.0,line:["e5", "e6", "Nxf6", "Ke4", "Qe2"]},"e6": {eval:1.5,line:["e5", "e6", "Nxf6", "Ke4", "Qe2"]}}'
+);
