@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import getImage from "./getImage.js"
 import Stack from '@mui/joy/Stack';
 import Sheet from '@mui/joy/Sheet';
@@ -17,6 +17,29 @@ const Sidebar = ({ whitePlayer, blackPlayer, userMove }) => {
         padding: theme.spacing(1),
         borderRadius: theme.radius.md,
     }));
+    const [submitEnabled, setSubmitEnabled] = useState(false);
+    const [showMoves, setShowMoves] = useState(false);
+    const [gmMove, setGmMove] = useState('');
+    const [stockFishMove, setStockFishMove] = useState('');
+
+    useEffect(() => {
+        if (userMove) {
+            setSubmitEnabled(true);
+        }
+    }, [userMove]);
+
+    const handleSubmit = () => {
+        setSubmitEnabled(false);
+        setShowMoves(true);
+
+            //placeholders for api integration to verify
+            // the submit button is working as intended
+            const newGmMove = Math.floor(Math.random() * 100) + 1;
+            const newStockFishMove = Math.floor(Math.random() * 100) + 1;
+            setGmMove(newGmMove); 
+            setStockFishMove(newStockFishMove);
+
+        }
 
     return (
         <div className="sidebar">
@@ -32,15 +55,17 @@ const Sidebar = ({ whitePlayer, blackPlayer, userMove }) => {
                 </Item>
                 <Item><h2>Your Move</h2>
                     <p>{userMove}</p></Item>
-                <Item><h2>GM's Move</h2>
-                    <p>E4</p></Item>
-                <Item><h2>StockFish's Move</h2>
-                    <p>D4</p></Item>
-                <ButtonGroup aria-label="Button Area">
-                <Button variant="dark">Submit</Button>
-                <Button variant="dark">Check</Button>
-                <Button variant="dark">Next</Button>
+                <ButtonGroup aria-label="Button Area">  
+                <Button variant="dark" onClick={handleSubmit} disabled={!(submitEnabled)}>Submit</Button>
                 </ButtonGroup>
+                {showMoves && (
+                    <>
+                        <Item><h2>GM's Move</h2>
+                            <p>{gmMove}</p></Item>
+                        <Item><h2>StockFish's Move</h2>
+                            <p>{stockFishMove}</p></Item>
+                    </>
+                )}
             </Stack>
 
         </div>

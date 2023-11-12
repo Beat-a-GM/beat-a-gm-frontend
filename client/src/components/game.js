@@ -31,8 +31,6 @@ function compareFEN(fen1, fen2) {
 }
 
 
-
-
 export default function Game({  }) {
   const chess = useMemo(() => new Chess(), []); 
   const [fen, setFen] = useState(chess.fen()); 
