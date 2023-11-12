@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import getImage from "./getImage.js"
 import Stack from '@mui/joy/Stack';
 import Sheet from '@mui/joy/Sheet';
@@ -20,6 +20,7 @@ const Sidebar = ({ whitePlayer, blackPlayer,userMove,point, stockFishMove, gmMov
     }));
     const [submitEnabled, setSubmitEnabled] = useState(false);
     const [showMoves, setShowMoves] = useState(false);
+
 
 
     useEffect(() => {
@@ -46,16 +47,20 @@ const Sidebar = ({ whitePlayer, blackPlayer,userMove,point, stockFishMove, gmMov
                     <p>White: {whitePlayer}</p>
                 </Item>
                 <Item><h2>Your Move</h2>
+
                     <p className="printer">{userMove}</p></Item>
+
                 <ButtonGroup aria-label="Button Area">  
                 <Button variant="dark" onClick={handleSubmit} disabled={!(submitEnabled)}>Submit</Button>
                 </ButtonGroup>
                 {showMoves && (
                     <>
                         <Item><h2>GM's Move</h2>
+
                             <p className="printer">{gmMove}</p></Item>
                         <Item><h2>StockFish's Move</h2>
                             <p className="printer">{stockFishMove}</p></Item>
+
                     </>
                 )}
             </Stack>

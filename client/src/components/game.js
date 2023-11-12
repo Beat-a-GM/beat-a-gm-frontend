@@ -32,6 +32,7 @@ function compareFEN(fen1, fen2) {
 
 function setPoint(point) {
 
+
 }
 
 
@@ -41,6 +42,7 @@ export default function Game({ inputFEN, bestMove, GMmove }) {
   }
   const chess = useMemo(() => new Chess(inputFEN), []); 
   const [fen, setFen] = useState(chess.fen());
+
   const [over, setOver] = useState("");
   let userMoveFEN = "";
   const [userMove, setUserMove] = useState("");
