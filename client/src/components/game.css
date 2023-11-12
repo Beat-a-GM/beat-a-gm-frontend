@@ -1,0 +1,12 @@
+.gamecontainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+
+  }
+.board {
+    margin-right: 15px;
+}
+  

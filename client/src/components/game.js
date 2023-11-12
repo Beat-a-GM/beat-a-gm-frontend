@@ -2,18 +2,21 @@ import { useState, useMemo, useCallback, useEffect } from "react";
 import { Chessboard } from "react-chessboard";
 import { Chess } from "chess.js";
 import CustomDialog from "./customdialog";
+import Sidebar from "./game-sidebar";
+import "./game.css";
 
-export default function Game({ cleanup }) {
+export default function Game({  }) {
   const chess = useMemo(() => new Chess(), []); 
   const [fen, setFen] = useState(chess.fen()); 
   const [over, setOver] = useState("");
-    
+  let userMoveFEN = "";
   // makeAMove function
   const makeAMove = useCallback(
-    (move) => {
+    (move) => { 
       try {
         const result = chess.move(move); // update Chess instance
         setFen(chess.fen()); // update fen state to trigger a re-render
+        userMoveFEN = chess.fen();
   
         console.log("over, checkmate", chess.isGameOver(), chess.isCheckmate());
   
@@ -58,9 +61,17 @@ export default function Game({ cleanup }) {
   // Game component returned jsx
   return (
     <>
+    <div className = "gamecontainer">
       <div className="board">
         <Chessboard position={fen} onPieceDrop={onDrop} boardWidth={500}/>  {/**  <- 4 */}
       </div>
+      <Sidebar
+        whitePlayer="White Player"
+        blackPlayer="Black Player"
+        userMove={userMoveFEN}
+
+      />
+    </div>
       <CustomDialog // <- 5
         open={Boolean(over)}
         title={over}
