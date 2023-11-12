@@ -30,36 +30,28 @@ const { filterMovesWhite, filterMovesBlack } = require('./filterMoves');
 /*console.log(filterMovesBlack(inputString));
 console.log(filterMovesWhite(inputString));*/
 
-axios.get(apiUrl)
-  .then(response => {
+app.get('/fill-db', async (req, res) => {
+  try {
+    const apiResponse = await axios.get(apiUrl);
     const regex = /\[Event[^\]]*]([\s\S]*?0-1)[\s\S]*?(?=\[Event|$)/g;
-    //console.log(response.data.slice(0, 5000));
-    const matches = response.data.match(regex).slice(0, 2);
-    console.log("matches?");
-    console.log(matches);
-    //increase 10 in order to get more of hikaru's games in october
-    for (let i=0;i<matches.length;i++) {
-      const moveOrderWhite = filterMovesWhite(matches[i]);
-      const moveOrderBlack = filterMovesBlack(matches[i]);
-      console.log(moveOrderWhite);
-      console.log(moveOrderBlack);
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error.message);
-  });
+    const matches = apiResponse.data.match(regex).slice(0, 2);
+    console.log("matches?", matches);
 
-  async function getEval() {
-    const getEvaluation = require('./getEvaluation');
-    console.log("output??");
-    try {
-      const op = await getEvaluation('e2e4 e7e5 e1e2 e8e7');
-      console.log(op);
-    } catch (error) {
-      console.error('Error:', error.message);
+    for (let match of matches) {
+      const moveOrderWhite = filterMovesWhite(match);
+      const moveOrderBlack = filterMovesBlack(match);
+      console.log(moveOrderWhite, moveOrderBlack);
+
+      await axios.post('http://127.0.0.1:5000/construct', { whiteMoves: moveOrderWhite, blackMoves: moveOrderBlack });
     }
+
+    res.send('Data processed successfully');
+  } catch (error) {
+    console.error('Error:', error.message);
+    res.status(500).send('An error occurred');
   }
-getEval();
+});
+
 app.get('/puzzles', async (req, res) => {
   const result = await getPuzzle();
   console.log(result);
@@ -77,6 +69,25 @@ app.get('/puzzles', async (req, res) => {
     }
   });
 });
+
+app.get('/test-stockfish', async (req, res) => {
+  const result = await getPuzzle();
+  console.log(result);
+  var pos = result[0][0];
+  res.send({
+    "position": {
+      "Id": pos.PositionID,
+      "FEN": pos.FEN,
+      "Eval": pos.Eval,
+      "Moves": pos.Moves,
+      "WhiteName": pos.WhiteName,
+      "BlackName": pos.BlackName,
+      "MovePlayed": pos.MovePlayed,
+      "GameDescription": pos.GameDescription
+    }
+  });
+});
+
 app.listen(port, () => {
   console.log(`Listening on ${port}`);
 });

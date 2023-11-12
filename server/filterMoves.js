@@ -1,17 +1,23 @@
 function filterMovesWhite(inputString) {
-    const moveOrderRegex = /\d+\.\s(?:\S+\s?){1,2}(?=\{)/g;
-    const moveOrderRegexBlack = /\d+\.\.\.\s(?:\S+\s?){1,2}(?=\{)/g;
-// Extract move orders from the input string
-const moveOrders = inputString.match(moveOrderRegex);
+    const moveOrderRegex = /\d+\.\s(\S+)(?:\s\S+)?/g;
+    const moves = [];
 
-// Remove the times from each move order
-const moveOrdersWithoutTimes = moveOrders.map(moveOrder => moveOrder.replace(/\{\[%clk[^}]*\]\}/g, '').trim());
-return moveOrdersWithoutTimes
+    let match;
+    while ((match = moveOrderRegex.exec(inputString)) !== null) {
+        moves.push(match[1]);
+    }
+
+    return moves;
 }
 function filterMovesBlack(inputString) {
-    moveOrderRegexBlack = /\d+\.\.\.\s(?:\S+\s?){1,2}(?=\{)/g;
-    const moveOrdersBlack = inputString.match(moveOrderRegexBlack);
-    const moveOrdersWithoutTimes = moveOrdersBlack.map(moveOrder => moveOrder.replace(/\{\[%clk[^}]*\]\}/g, '').trim());
-    return moveOrdersWithoutTimes;
+    const moveOrderRegexBlack = /\d+\.\.\.\s(\S+)/g;
+    const moves = [];
+
+    let match;
+    while ((match = moveOrderRegexBlack.exec(inputString)) !== null) {
+        moves.push(match[1]);
+    }
+
+    return moves;
 }
 module.exports = {filterMovesWhite, filterMovesBlack}
