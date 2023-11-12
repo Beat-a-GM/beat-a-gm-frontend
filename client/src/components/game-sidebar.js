@@ -23,7 +23,7 @@ const Sidebar = ({ whitePlayer, blackPlayer, userMove }) => {
     const [stockFishMove, setStockFishMove] = useState('');
 
     useEffect(() => {
-        if (userMove) {
+        if (!!userMove) {
             setSubmitEnabled(true);
         }
     }, [userMove]);
