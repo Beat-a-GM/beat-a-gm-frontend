@@ -8,17 +8,27 @@
   }
   
 
-  .play-button {
-    background-color: #007bff;
-    color: #fff;
-    font-size: 24px;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 70%;
+  .futuristic-button {
+    background-color: #333333;
+    border: 2px solid #ff1100;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ff1100;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 20px;
+    text-transform: uppercase;
+    transition: all 0.2s ease-in-out;
+    margin-top: 100px;
   }
   
-  .play-button:hover {
-    background-color: #0056b3;
+  .futuristic-button:hover {
+    background-color: #ff1100;
+    color: black;
   }
+  
+  .futuristic-button.large {
+    width: 200px;
+    height: 50px;
+  }
+

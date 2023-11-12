@@ -2,7 +2,8 @@ import React from "react";
 import getImage from "./getImage.js"
 import Stack from '@mui/joy/Stack';
 import Sheet from '@mui/joy/Sheet';
-import Grid from '@mui/joy/Grid';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { styled } from '@mui/joy/styles';
 
 const Sidebar = ({ whitePlayer, blackPlayer, userMove }) => {
@@ -35,22 +36,11 @@ const Sidebar = ({ whitePlayer, blackPlayer, userMove }) => {
                     <p>E4</p></Item>
                 <Item><h2>StockFish's Move</h2>
                     <p>D4</p></Item>
-                <Item>
-                    <Grid container spacing={2} sx={{ flexGrow: 1 }}>
-                        <Grid xs={4}>
-                            <button>Submit</button>
-                        </Grid>
-                        <Grid xs={4}>
-                            <button>Skip</button>
-                        </Grid>
-                        <Grid xs={4}>
-                            <button>Next</button>
-                        </Grid>
-
-                    </Grid>
-                </Item>
-
-
+                <ButtonGroup aria-label="Button Area">
+                <Button variant="dark">Submit</Button>
+                <Button variant="dark">Check</Button>
+                <Button variant="dark">Next</Button>
+                </ButtonGroup>
             </Stack>
 
         </div>
