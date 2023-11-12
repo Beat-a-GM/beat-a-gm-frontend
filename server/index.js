@@ -9,7 +9,7 @@ const axios = require('axios');
 const pool = mysql.createPool({
 host: "127.0.0.1",
 user: "root",
-password: "gavin313",
+password: "MaisyDoge13",
 database: "chessdb"
 }).promise();
 
@@ -49,6 +49,17 @@ axios.get(apiUrl)
     console.error('Error:', error.message);
   });
 
+  async function getEval() {
+    const getEvaluation = require('./getEvaluation');
+    console.log("output??");
+    try {
+      const op = await getEvaluation('e2e4 e7e5 e1e2 e8e7');
+      console.log(op);
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  }
+getEval();
 app.get('/puzzles', async (req, res) => {
   const result = await getPuzzle();
   console.log(result);
@@ -80,4 +91,3 @@ const Position = {
   GameDescription: 'Sample game description',
 };
 const insertPosition = require("./insertPosition")
-//insertPosition(pool, Position)
