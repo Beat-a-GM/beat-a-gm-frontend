@@ -5,8 +5,9 @@ import Sheet from '@mui/joy/Sheet';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { styled } from '@mui/joy/styles';
+import "./game-sidebar.css";
 
-const Sidebar = ({ whitePlayer, blackPlayer, userMove }) => {
+const Sidebar = ({ whitePlayer, blackPlayer,userMove,point, stockFishMove, gmMove }) => {
     const Item = styled(Sheet)(({ theme }) => ({
         ...theme.typography['body-sm'],
         textAlign: 'center',
@@ -19,8 +20,8 @@ const Sidebar = ({ whitePlayer, blackPlayer, userMove }) => {
     }));
     const [submitEnabled, setSubmitEnabled] = useState(false);
     const [showMoves, setShowMoves] = useState(false);
-    const [gmMove, setGmMove] = useState('');
-    const [stockFishMove, setStockFishMove] = useState('');
+
+
 
     useEffect(() => {
         if (!!userMove) {
@@ -32,20 +33,12 @@ const Sidebar = ({ whitePlayer, blackPlayer, userMove }) => {
         setSubmitEnabled(false);
         setShowMoves(true);
 
-            //placeholders for api integration to verify
-            // the submit button is working as intended
-            const newGmMove = Math.floor(Math.random() * 100) + 1;
-            const newStockFishMove = Math.floor(Math.random() * 100) + 1;
-            setGmMove(newGmMove); 
-            setStockFishMove(newStockFishMove);
-
         }
-
     return (
         <div className="sidebar">
             <Stack spacing={1}>
                 <Item><h2>Current Points</h2>
-                    <p>{0}</p></Item>
+                    <div className="printer">{point}</div></Item>
                 <Item>
                     <img src={getImage(blackPlayer)} alt="black player" width="100px" />
                     <p>Black: {blackPlayer}</p>
@@ -54,16 +47,20 @@ const Sidebar = ({ whitePlayer, blackPlayer, userMove }) => {
                     <p>White: {whitePlayer}</p>
                 </Item>
                 <Item><h2>Your Move</h2>
-                    <p>{userMove}</p></Item>
+
+                    <p className="printer">{userMove}</p></Item>
+
                 <ButtonGroup aria-label="Button Area">  
                 <Button variant="dark" onClick={handleSubmit} disabled={!(submitEnabled)}>Submit</Button>
                 </ButtonGroup>
                 {showMoves && (
                     <>
                         <Item><h2>GM's Move</h2>
-                            <p>{gmMove}</p></Item>
+
+                            <p className="printer">{gmMove}</p></Item>
                         <Item><h2>StockFish's Move</h2>
-                            <p>{stockFishMove}</p></Item>
+                            <p className="printer">{stockFishMove}</p></Item>
+
                     </>
                 )}
             </Stack>

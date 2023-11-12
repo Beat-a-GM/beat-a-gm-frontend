@@ -30,16 +30,26 @@ function compareFEN(fen1, fen2) {
   return piece + from + to;
 }
 
+function setPoint(point) {
 
-export default function Game({  }) {
-  const chess = useMemo(() => new Chess(), []); 
-  const [fen, setFen] = useState(chess.fen()); 
+
+}
+
+
+export default function Game({ inputFEN, bestMove, GMmove }) {
+  if( inputFEN == null ){
+    inputFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+  }
+  const chess = useMemo(() => new Chess(inputFEN), []); 
+  const [fen, setFen] = useState(chess.fen());
+
   const [over, setOver] = useState("");
   let userMoveFEN = "";
   const [userMove, setUserMove] = useState("");
+  const [point, setPoint] = useState(0);
 
   // makeAMove function
-  let originalFEN = chess.fen();
+  let originalFEN = inputFEN;
   const makeAMove = useCallback(
     (move) => { 
       try {
@@ -49,22 +59,12 @@ export default function Game({  }) {
         userMoveFEN = chess.fen();
         setUserMove(compareFEN(originalFEN, userMoveFEN));
         
+        if (move == bestMove) {
+          setOver("Stockfish agrees with you!!");
+          setPoint(point + 50);
+        } 
   
-        console.log("over, checkmate", chess.isGameOver(), chess.isCheckmate());
-  
-        if (chess.isGameOver()) { // check if move led to "game over"
-          if (chess.isCheckmate()) { // if reason for game over is a checkmate
-            // Set message to checkmate. 
-            setOver(
-              `Checkmate! ${chess.turn() === "w" ? "black" : "white"} wins!`
-            ); 
-            // The winner is determined by checking which side made the last move
-          } else if (chess.isDraw()) { // if it is a draw
-            setOver("Draw"); // set message to "Draw"
-          } else {
-            setOver("Game over");
-          }
-        }
+        
   
         return result;
       } catch (e) {
@@ -98,9 +98,12 @@ export default function Game({  }) {
         <Chessboard position={fen} onPieceDrop={onDrop} boardWidth={650}/>  
       </div>
       <Sidebar
-        whitePlayer="White Player"
-        blackPlayer="Black Player"
+        whitePlayer="Hikaru"
+        blackPlayer="MagnusCarlsen"
         userMove={userMove}
+        point={point}
+        stockFishMove={bestMove}
+        gmMove={GMmove}
       />
     </div>
       <CustomDialog 
