@@ -47,7 +47,6 @@ axios.get(apiUrl)
     console.error('Error:', error.message);
   });
 
-
 app.get('/puzzles', async (req, res) => {
   const result = await getPuzzle();
   console.log(result);
