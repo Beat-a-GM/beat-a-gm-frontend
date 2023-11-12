@@ -18,7 +18,7 @@ async function getPuzzle() {
   return result;
 }
 
-const username = 'hikaru';
+const username = 'magnuscarlsen';
 const year = 2023;
 const month = 10;
 

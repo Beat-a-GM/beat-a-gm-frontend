@@ -41,7 +41,7 @@ def construct_position():
             # Make white move if available
 
             stockfish.set_fen_position(board.fen())
-            top_moves_white = stockfish.get_top_moves(3)
+            top_moves_white = stockfish.get_top_moves(2)
             
             if ( moveno>15 and
                 top_moves_white[0].get('Centipawn')>100 and top_moves_white[0].get('Centipawn')<500 and
@@ -57,11 +57,21 @@ def construct_position():
             
 
             stockfish.set_fen_position(board.fen())
-            top_moves_black = stockfish.get_top_moves(3)
+            top_moves_black = stockfish.get_top_moves(2)
             #print(f"Top 3 black moves after {board.fen()}: {top_moves_black}")
 
             #print("actual move: " + blackMove)
             # Make black move if available
+
+
+            if ( moveno>15 and
+                top_moves_black[0].get('Centipawn')<-100 and top_moves_black[0].get('Centipawn')>-500 and
+            top_moves_black[1].get('Centipawn')<-100 and top_moves_black[1].get('Centipawn')>-500
+                ):
+                print(board.fen())
+                return {"Position": board.fen(), "StockfishMove": top_moves_white[0].get("Move"), "GMMove": whiteMove}
+
+
             if blackMove:
                 board.push_san(blackMove)
             
