@@ -21,18 +21,24 @@ function compareFEN(fen1, fen2) {
                   from = String.fromCharCode(97 + j) + (8 - i);
                   piece = board1[i][j];
               } else {
+                console.log("else " + board2[i][j])
                   to = String.fromCharCode(97 + j) + (8 - i);
               }
           }
       }
   }
-
-  return piece + from + to;
+  if(piece == 'P') return to;
+  console.log(piece + " " + to);
+  return piece + to;
 }
 
+
 function setPoint(point) {
-
-
+  if (point == 0) {
+    return 0;
+  } else {
+    return point + 50;
+  }
 }
 
 
