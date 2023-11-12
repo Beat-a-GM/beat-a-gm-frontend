@@ -1,23 +1,16 @@
-function filterMovesWhite(inputString) {
-    const moveOrderRegex = /\d+\.\s(\S+)(?:\s\S+)?/g;
+function filterMoves(inputString, isWhite) {
+    const moveOrderRegex = isWhite ? /\d+\.\s(\S+)(?:\s\S+)?/g : /\d+\.\.\.\s(\S+)/g;
     const moves = [];
+    const moveMatches = inputString.match(moveOrderRegex);
 
-    let match;
-    while ((match = moveOrderRegex.exec(inputString)) !== null) {
-        moves.push(match[1]);
+    if (moveMatches) {
+        for (const match of moveMatches) {
+            const move = match.split(' ')[1];
+            moves.push(move);
+        }
     }
 
     return moves;
 }
-function filterMovesBlack(inputString) {
-    const moveOrderRegexBlack = /\d+\.\.\.\s(\S+)/g;
-    const moves = [];
 
-    let match;
-    while ((match = moveOrderRegexBlack.exec(inputString)) !== null) {
-        moves.push(match[1]);
-    }
-
-    return moves;
-}
-module.exports = {filterMovesWhite, filterMovesBlack}
+module.exports = { filterMoves };

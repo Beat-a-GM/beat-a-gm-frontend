@@ -38,6 +38,7 @@ def construct_position():
 
     print(whiteMoves)
     print(blackMoves)
+    ilglcnt=0
     for whiteMove, blackMove in zip(whiteMoves, blackMoves):
         try:
             # Make white move if available
@@ -52,8 +53,12 @@ def construct_position():
                 print(f"After {blackMove}: {board.fen()}")
 
         except chess.IllegalMoveError as e:
-            print(f"Error: {e}")
-            return "Illegal move encountered", 400
+            print("Illegal Move ")
+            return "illegal move"
+        except chess.AmbiguousMoveError as e:
+            print("Ambigious Move ")
+            ilglcnt+=1
+            return "ambigious move"
 
     return "Position constructed"
     
