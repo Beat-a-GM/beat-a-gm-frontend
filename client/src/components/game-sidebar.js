@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import getImage from "./getImage.js"
 import Stack from '@mui/joy/Stack';
 import Sheet from '@mui/joy/Sheet';
@@ -7,7 +7,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { styled } from '@mui/joy/styles';
 import "./game-sidebar.css";
 
-const Sidebar = ({ whitePlayer, blackPlayer, userMove, point }) => {
+const Sidebar = ({ whitePlayer, blackPlayer,userMove,point }) => {
     const Item = styled(Sheet)(({ theme }) => ({
         ...theme.typography['body-sm'],
         textAlign: 'center',
@@ -18,7 +18,29 @@ const Sidebar = ({ whitePlayer, blackPlayer, userMove, point }) => {
         padding: theme.spacing(1),
         borderRadius: theme.radius.md,
     }));
+    const [submitEnabled, setSubmitEnabled] = useState(false);
+    const [showMoves, setShowMoves] = useState(false);
+    const [gmMove, setGmMove] = useState('');
+    const [stockFishMove, setStockFishMove] = useState('');
 
+    useEffect(() => {
+        if (!!userMove) {
+            setSubmitEnabled(true);
+        }
+    }, [userMove]);
+
+    const handleSubmit = () => {
+        setSubmitEnabled(false);
+        setShowMoves(true);
+
+            //placeholders for api integration to verify
+            // the submit button is working as intended
+            const newGmMove = Math.floor(Math.random() * 100) + 1;
+            const newStockFishMove = Math.floor(Math.random() * 100) + 1;
+            setGmMove(newGmMove); 
+            setStockFishMove(newStockFishMove);
+
+        }
     return (
         <div className="sidebar">
             <Stack spacing={1}>
