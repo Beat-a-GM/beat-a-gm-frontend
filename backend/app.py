@@ -1,19 +1,24 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from stockfish import Stockfish
 import chess
+import requests
 
 app = Flask(__name__)
 
 # Initialize Stockfish
 stockfish = Stockfish('/opt/homebrew/bin/stockfish')
 
+def get_chess_game(username, year, month):
+    print(f"https://api.chess.com/pub/player/{username}/games/{year}/{month}/pgn")
+    data = requests.get(f"https://api.chess.com/pub/player/{username}/games/{year}/{month}/pgn")
+    print(data.text)
+    return data.text
+
 @app.route('/home', methods=["GET"])
 def home():
-    fen = "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R"
-    stockfish.set_fen_position(fen)
-    evaluation = stockfish.get_evaluation()
-    print(evaluation)
-    return jsonify(evaluation)
+    print("Hello World")
+    data = get_chess_game("magnuscarlsen", 2023, 10)
+    return jsonify({"hello": data})
 
 @app.route('/evaluate', methods=['POST'])
 def evaluate_position():
