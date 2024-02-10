@@ -14,7 +14,7 @@ Beat-A-GM is a chess puzzle website designed to enhance the positional game of t
 
 - **Frontend:** Built using React
 - **Backend:** Built using Python
-  Backend Repo: https://github.com/LCodingX/beat-a-gm-backend
+- Backend Repo: https://github.com/LCodingX/beat-a-gm-backend
 
 ## Team Members
 
