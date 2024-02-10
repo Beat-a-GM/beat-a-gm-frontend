@@ -1,8 +1,8 @@
 import { useState, useMemo, useCallback } from "react";
 import { Chessboard } from "react-chessboard";
 import { Chess } from "chess.js";
-import CustomDialog from "./customdialog";
-import Sidebar from "./game-sidebar";
+import CustomDialog from "../../components/customdialog";
+import Sidebar from "../../components/game-sidebar";
 import "./game.css";
 
 function parseFEN(fen) {
@@ -15,29 +15,29 @@ function compareFEN(fen1, fen2) {
   let to = '', piece = '';
 
   for (let i = 0; i < 8; i++) {
-      for (let j = 0; j < 8; j++) {
-          if (board1[i][j] !== board2[i][j]) {
-              if (board1[i][j] !== '.') {
+    for (let j = 0; j < 8; j++) {
+      if (board1[i][j] !== board2[i][j]) {
+        if (board1[i][j] !== '.') {
 
-                  piece = board1[i][j];
-              } else {
-                console.log("else " + board2[i][j])
-                  to = String.fromCharCode(97 + j) + (8 - i);
-              }
-          }
+          piece = board1[i][j];
+        } else {
+          console.log("else " + board2[i][j])
+          to = String.fromCharCode(97 + j) + (8 - i);
+        }
       }
+    }
   }
-  if(piece === 'P') return to;
+  if (piece === 'P') return to;
   console.log(piece + " " + to);
   return piece + to;
 }
 
 
 export default function Game({ inputFEN, bestMove, GMmove }) {
-  if( inputFEN == null ){
+  if (inputFEN == null) {
     inputFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
   }
-  const chess = useMemo(() => new Chess(inputFEN), [inputFEN]); 
+  const chess = useMemo(() => new Chess(inputFEN), [inputFEN]);
   const [fen, setFen] = useState(chess.fen());
 
   const [over, setOver] = useState("");
@@ -47,7 +47,7 @@ export default function Game({ inputFEN, bestMove, GMmove }) {
   // makeAMove function
   let originalFEN = inputFEN;
   const makeAMove = useCallback(
-    (move) => { 
+    (move) => {
       try {
         const result = chess.move(move); // update Chess instance
 
@@ -61,8 +61,8 @@ export default function Game({ inputFEN, bestMove, GMmove }) {
     },
     [chess]
   );
-   // onDrop function
-   function onDrop(sourceSquare, targetSquare) {
+  // onDrop function
+  function onDrop(sourceSquare, targetSquare) {
     const moveData = {
       from: sourceSquare,
       to: targetSquare,
@@ -77,23 +77,25 @@ export default function Game({ inputFEN, bestMove, GMmove }) {
 
     return true;
   }
-  
+
   // Game component returned jsx
   return (
     <>
-    <div className = "gamecontainer">
-      <div className="board">
-        <Chessboard position={fen} onPieceDrop={onDrop} boardWidth={650}/>  
+      <div className="gamecontainer">
+        <div className="board">
+          <Chessboard position={fen} onPieceDrop={onDrop} boardWidth={650} />
+        </div>
+        <aside className="gamesidebar">
+          <Sidebar
+            whitePlayer="Hikaru"
+            blackPlayer="MagnusCarlsen"
+            userMove={userMove}
+            stockFishMove={bestMove}
+            gmMove={GMmove}
+          />
+        </aside>
       </div>
-      <Sidebar
-        whitePlayer="Hikaru"
-        blackPlayer="MagnusCarlsen"
-        userMove={userMove}
-        stockFishMove={bestMove}
-        gmMove={GMmove}
-      />
-    </div>
-      <CustomDialog 
+      <CustomDialog
         open={Boolean(over)}
         title={over}
         contentText={over}

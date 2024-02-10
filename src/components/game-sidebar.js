@@ -8,7 +8,7 @@ import { styled } from '@mui/joy/styles';
 import Point from "./point.js";
 import "./game-sidebar.css";
 
-const Sidebar = ({ whitePlayer, blackPlayer,userMove,stockFishMove, gmMove }) => {
+const Sidebar = ({ whitePlayer, blackPlayer, userMove, stockFishMove, gmMove }) => {
     const Item = styled(Sheet)(({ theme }) => ({
         ...theme.typography['body-sm'],
         textAlign: 'center',
@@ -35,11 +35,11 @@ const Sidebar = ({ whitePlayer, blackPlayer,userMove,stockFishMove, gmMove }) =>
         setShowMoves(true);
         point.compareMoves(userMove, gmMove, stockFishMove);
         console.log(point.displayPoints());
-        }
+    }
     return (
         <div className="sidebar">
             <Stack spacing={1}>
-                <Item><h2>Current Points</h2>
+                <Item><h3>Current Points</h3>
                     <div className="printer">{point.points}</div></Item>
                 <Item>
                     <img src={getImage(blackPlayer)} alt="black player" width="100px" />
@@ -48,23 +48,39 @@ const Sidebar = ({ whitePlayer, blackPlayer,userMove,stockFishMove, gmMove }) =>
                     <img src={getImage(whitePlayer)} alt="white player" width="100px" />
                     <p>White: {whitePlayer}</p>
                 </Item>
-                <Item><h2>Your Move</h2>
+                <Item><h3>Your Move</h3>
+                    {
+                        userMove ? (
+                            <p className="printer">{userMove}</p>
+                        ) : (
+                            <p className="printer">-</p>
+                        )
+                    }
+                </Item>
 
-                    <p className="printer">{userMove}</p></Item>
-
-                <ButtonGroup aria-label="Button Area">  
-                <Button variant="dark" onClick={handleSubmit} disabled={!(submitEnabled)}>Submit</Button>
+                <ButtonGroup aria-label="Button Area">
+                    <Button variant="dark" onClick={handleSubmit} disabled={!(submitEnabled)}>Submit</Button>
                 </ButtonGroup>
-                {showMoves && (
-                    <>
-                        <Item><h2>GM's Move</h2>
+                {showMoves ? (
+                    <div className="bestmoves">
+                        <Item><h3>GM's Move</h3>
 
                             <p className="printer">{gmMove}</p></Item>
-                        <Item><h2>StockFish's Move</h2>
+                        <Item><h3>StockFish's Move</h3>
                             <p className="printer">{stockFishMove}</p></Item>
 
-                    </>
-                )}
+                    </div>
+                ) : (
+                    <div className="bestmoves">
+                        <Item><h3>GM's Move</h3>
+
+                            <p className="printer">-</p></Item>
+                        <Item><h3>StockFish's Move</h3>
+                            <p className="printer">-</p></Item>
+
+                    </div>
+                )
+                }
             </Stack>
 
         </div>

@@ -1,9 +1,10 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ChessNavbar from "./components/navbar";
-import Home from "./components/home";
-import Game from "./components/game";
-import AboutUs from "./components/aboutus";
+import Home from "./pages/home/home";
+import Game from "./pages/game/game";
+import AboutUs from "./pages/aboutus/aboutus";
+import "./App.css";
 
 const App = () => {
   const positions = [
@@ -60,14 +61,16 @@ const App = () => {
   const GMmove = randomPosition.GMMove;
 
   return (
-    <div>
-      <ChessNavbar/>
-      <Routes>
-       <Route path="/" element={<Home />}/>
-        <Route path="/play" element={<Game inputFEN={inputFEN} bestMove={bestMove} GMmove={GMmove} />}/>
-        <Route path="/aboutus" element={<AboutUs />}/>
-      </Routes>
+    <div className="screen">
+      <ChessNavbar />
+      <div className="excludenav">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/play" element={<Game inputFEN={inputFEN} bestMove={bestMove} GMmove={GMmove} />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+        </Routes>
+      </div>
     </div>
   );
- };
-  export default App;
+};
+export default App;

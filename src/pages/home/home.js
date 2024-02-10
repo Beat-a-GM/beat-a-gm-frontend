@@ -5,8 +5,9 @@ import { Link } from 'react-router-dom';
 let imageStyle = {
     backgroundImage:
         'url("https://github.com/DK-Kim4312/images/blob/main/background_chess_bgm.png?raw=true")',
-    backgroundSize: "contain",
+    backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
+    backgroundPosition: "center", 
     color: "white",
 };
 function Home() {

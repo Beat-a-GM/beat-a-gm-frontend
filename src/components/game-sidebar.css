@@ -3,3 +3,7 @@
     font-size: larger;
 
 }
+.bestmoves{
+    display: flex;
+    flex-direction:  row;
+}

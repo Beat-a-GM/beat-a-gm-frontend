@@ -1,5 +1,5 @@
 import React from "react";
-import "./AboutUs.css"; // Import the CSS file for styling
+import './aboutus.css';
 
 export default function AboutUs() {
     const aboutUsInfo = "Welcome to our Project! We are the Mad Hackers of 2023. We are a group of students from the University of Wisconsin-Madison with a common goal to make chess players' lives better by providing the REVOLUTIONARY positional puzzle powered by Stockfish 16.";
