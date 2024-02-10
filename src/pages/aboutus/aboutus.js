@@ -9,11 +9,11 @@ export default function AboutUs() {
             <h1>About Us</h1>
             <p>{aboutUsInfo}</p>
             <div className="developer-images">
-                <img className="image-placeholder" alt = "Dev1Image" height = "200px" src="https://github.com/DK-Kim4312/images/blob/main/Vincent_BAGM.png?raw=true"
+                <img className="image-placeholder" alt = "Dev1Image" height = "200px" src="/Vincent_BAGM.png"
             ></img>
-                <img className="image-placeholder" alt = "Dev2Image" height = "200px" src="https://github.com/DK-Kim4312/images/blob/main/DK_BAGM.png?raw=true"
+                <img className="image-placeholder" alt = "Dev2Image" height = "200px" src="/DK_BAGM.png"
             ></img>
-               <img className="image-placeholder" alt = "Dev3Image" height = "200px" src="https://github.com/DK-Kim4312/images/blob/main/Gavin_BAGM.png?raw=true"
+               <img className="image-placeholder" alt = "Dev3Image" height = "200px" src="/Gavin_BAGM.png"
             ></img>
             </div>
             <div className="developer-images">
