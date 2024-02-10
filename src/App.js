@@ -5,9 +5,6 @@ import Home from "./components/home";
 import Game from "./components/game";
 import AboutUs from "./components/aboutus";
 
-
-
-
 const App = () => {
   const positions = [
     {
@@ -61,7 +58,7 @@ const App = () => {
   const inputFEN = randomPosition.Position;
   const bestMove = randomPosition.StockfishMove;
   const GMmove = randomPosition.GMMove;
- 
+
   return (
     <div>
       <ChessNavbar/>
@@ -71,8 +68,6 @@ const App = () => {
         <Route path="/aboutus" element={<AboutUs />}/>
       </Routes>
     </div>
-      
-
   );
  };
   export default App;
