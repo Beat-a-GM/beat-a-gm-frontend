@@ -5,6 +5,7 @@ import Home from "./pages/home/home";
 import Game from "./pages/game/game";
 import AboutUs from "./pages/aboutus/aboutus";
 import "./App.css";
+import Categories from "./pages/categories/categories";
 
 const App = () => {
   const positions = [
@@ -68,6 +69,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/play" element={<Game inputFEN={inputFEN} bestMove={bestMove} GMmove={GMmove} />} />
           <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/categories" element={<Categories />} />
         </Routes>
       </div>
     </div>

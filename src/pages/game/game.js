@@ -41,25 +41,21 @@ export default function Game({ inputFEN, bestMove, GMmove }) {
   const [fen, setFen] = useState(chess.fen());
 
   const [over, setOver] = useState("");
-  let userMoveFEN = "";
   const [userMove, setUserMove] = useState("");
 
-  // makeAMove function
-  let originalFEN = inputFEN;
   const makeAMove = useCallback(
     (move) => {
       try {
         const result = chess.move(move); // update Chess instance
 
         setFen(chess.fen()); // update fen state to trigger a re-render
-        userMoveFEN = chess.fen();
-        setUserMove(compareFEN(originalFEN, userMoveFEN));
+        setUserMove(compareFEN(inputFEN, chess.fen()));
         return result;
       } catch (e) {
         return null;
       } // null if the move was illegal, the move object if the move was legal
     },
-    [chess]
+    [chess, inputFEN]
   );
   // onDrop function
   function onDrop(sourceSquare, targetSquare) {

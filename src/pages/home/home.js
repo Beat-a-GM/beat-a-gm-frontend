@@ -17,7 +17,6 @@ function Home() {
             <div className="home" >
                 <Link to="/play">
                     <button className="futuristic-button" >START TRAINING</button>
-                    
                 </Link>
             </div>
         </div>
