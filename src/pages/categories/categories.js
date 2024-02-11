@@ -5,39 +5,34 @@ export default function Categories() {
     const categories = [
         {
             "href": "/categories/1",
-            "imgSrc": "/category1.png",
-            "alt": "Category 1",
-            "title": "Category 1"
+            "title": "Category 1",
+            "puzzles_ids": ["234", "235", "236", "237", "238"]
         },
         {
             "href": "/categories/2",
-            "imgSrc": "/category2.png",
-            "alt": "Category 2",
-            "title": "Category 2"
+            "title": "Category 2",
+            "puzzles_ids": ["239", "240", "241", "242", "243"]
+
         },
         {
             "href": "/categories/3",
-            "imgSrc": "/category3.png",
-            "alt": "Category 3",
-            "title": "Category 3"
+            "title": "Category 3",
+            "puzzles_ids": ["244", "245", "246", "247", "248"]
         },
         {
             "href": "/categories/4",
-            "imgSrc": "/category4.png",
-            "alt": "Category 4",
-            "title": "Category 4"
+            "title": "Category 4",
+            "puzzles_ids": ["249", "250", "251", "252", "253"]
         },
         {
             "href": "/categories/5",
-            "imgSrc": "/category5.png",
-            "alt": "Category 5",
-            "title": "Category 5"
+            "title": "Category 5",
+            "puzzles_ids": ["254", "255", "256", "257", "258"]
         },
         {
             "href": "/categories/6",
-            "imgSrc": "/category6.png",
-            "alt": "Category 6",
-            "title": "Category 6"
+            "title": "Category 6",
+            "puzzles_ids": ["259", "260", "261", "262", "263"]
         }
     ]
         ;
@@ -48,10 +43,19 @@ export default function Categories() {
             <div className="categories">
                 {
                     categories.map(category => (
-                        <a key={category.href} href={category.href} className="category">
-                            <img src={category.imgSrc} alt={category.alt} />
-                            <h3>{category.title}</h3>
-                        </a>
+                        <div className="category">
+                            <a href={category.href} >{category.title}</a>
+                            <ul>
+                                {category.puzzles_ids && category.puzzles_ids.length > 0 &&
+
+                                    category.puzzles_ids.map(id => (
+                                        <li>
+                                            <a href={category.href + "/" + id} key={id}>Puzzle {id}</a>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
                     ))
                 }
 
