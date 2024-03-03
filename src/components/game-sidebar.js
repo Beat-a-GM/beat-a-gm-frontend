@@ -5,10 +5,9 @@ import Sheet from '@mui/joy/Sheet';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { styled } from '@mui/joy/styles';
-import Point from "./point.js";
 import "./game-sidebar.css";
 
-const Sidebar = ({ whitePlayer, blackPlayer, userMove, stockFishMove, gmMove }) => {
+const Sidebar = ({ whitePlayer, blackPlayer, userMove, stockFishMoves, gmMove }) => {
     const Item = styled(Sheet)(({ theme }) => ({
         ...theme.typography['body-sm'],
         textAlign: 'center',
@@ -21,7 +20,23 @@ const Sidebar = ({ whitePlayer, blackPlayer, userMove, stockFishMove, gmMove }) 
     }));
     const [submitEnabled, setSubmitEnabled] = useState(false);
     const [showMoves, setShowMoves] = useState(false);
-    let point = new Point(0);
+
+    function parseStockFishMoves(stockFishMoves) {
+        if (!stockFishMoves) {
+            return [];
+        }
+        const mappedMoves = stockFishMoves.map((move) => {
+            return {
+                eval: move.eval,
+                san: move.san,
+                uci: move.uci
+            }
+
+        })
+        return mappedMoves;
+    }
+
+
 
 
     useEffect(() => {
@@ -33,14 +48,10 @@ const Sidebar = ({ whitePlayer, blackPlayer, userMove, stockFishMove, gmMove }) 
     const handleSubmit = () => {
         setSubmitEnabled(false);
         setShowMoves(true);
-        point.compareMoves(userMove, gmMove, stockFishMove);
-        console.log(point.displayPoints());
     }
     return (
         <div className="sidebar">
             <Stack spacing={1}>
-                <Item><h3>Current Points</h3>
-                    <div className="printer">{point.points}</div></Item>
                 <Item>
                     <img src={getImage(blackPlayer)} alt="black player" width="100px" />
                     <p>Black: {blackPlayer}</p>
@@ -53,7 +64,9 @@ const Sidebar = ({ whitePlayer, blackPlayer, userMove, stockFishMove, gmMove }) 
                         userMove ? (
                             <p className="printer">{userMove}</p>
                         ) : (
-                            <p className="printer">-</p>
+                            parseStockFishMoves(stockFishMoves).map((move, index) => (
+                                <p key={index} className="printer">{move.san}</p>
+                            ))
                         )
                     }
                 </Item>
@@ -67,7 +80,12 @@ const Sidebar = ({ whitePlayer, blackPlayer, userMove, stockFishMove, gmMove }) 
 
                             <p className="printer">{gmMove}</p></Item>
                         <Item><h3>StockFish's Move</h3>
-                            <p className="printer">{stockFishMove}</p></Item>
+                            {
+                                parseStockFishMoves(stockFishMoves).map((move, index) => (
+                                    <p key={index} className="printer">{move.san}</p>
+                                ))
+                            }
+                        </Item>
 
                     </div>
                 ) : (

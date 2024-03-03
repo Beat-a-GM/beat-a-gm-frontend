@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { Chessboard } from "react-chessboard";
 import { Chess } from "chess.js";
 import CustomDialog from "../../components/customdialog";
@@ -33,10 +33,49 @@ function compareFEN(fen1, fen2) {
 }
 
 
-export default function Game({ inputFEN, bestMove, GMmove }) {
-  if (inputFEN == null) {
-    inputFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-  }
+export default function Game() {
+
+  const [blackPlayer, setBlackPlayer] = useState("Black");
+  const [whitePlayer, setWhitePlayer] = useState("White");
+  const [difficulty, setDifficulty] = useState("default");
+  const [gameLink, setGameLink] = useState("");
+  const [whiteMove, setWhiteMove] = useState(""); // to_move from the API true if white's move
+  const [inputFEN, setInputFEN] = useState("r1b2rk1/1p1nqpb1/p2p1np1/2pP2Bp/P1N4P/2N3P1/1P1QPPB1/R3K2R w KQ - 2 16");
+  const [bestMoves, setBestMoves] = useState([{"eval": 1.5, "san": "Nc3", "uci": "b1c3"}]);
+  const [GMmove, setGMmove] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [errorRaised, setErrorRaised] = useState(null);
+
+
+  useEffect( () => {
+    async function fetchData() {
+      await fetch("https://beat-a-gm-backend.vercel.app/puzzles")
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) => {
+          setBlackPlayer(data.black_username);
+          setWhitePlayer(data.white_username);
+          setDifficulty(data.difficulty);
+          setGameLink(data.game_link);
+          setWhiteMove(data.to_move);
+          setInputFEN(data.starting_pos);
+          setBestMoves(data.top_five);
+          setGMmove(data.gm_move);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setErrorRaised(error);
+        });
+
+    }
+    fetchData();
+  }, []);
+
+
   const chess = useMemo(() => new Chess(inputFEN), [inputFEN]);
   const [fen, setFen] = useState(chess.fen());
 
@@ -73,7 +112,8 @@ export default function Game({ inputFEN, bestMove, GMmove }) {
 
     return true;
   }
-
+  if (loading) return <div>Loading...</div>;
+  if (errorRaised) return <div>Error: {errorRaised.message}</div>;
   // Game component returned jsx
   return (
     <>
@@ -83,10 +123,10 @@ export default function Game({ inputFEN, bestMove, GMmove }) {
         </div>
         <aside className="gamesidebar">
           <Sidebar
-            whitePlayer="Hikaru"
-            blackPlayer="MagnusCarlsen"
+            whitePlayer={whitePlayer}
+            blackPlayer={blackPlayer}
             userMove={userMove}
-            stockFishMove={bestMove}
+            stockFishMoves={bestMoves}
             gmMove={GMmove}
           />
         </aside>
