@@ -4,6 +4,7 @@ import { Chess } from "chess.js";
 import CustomDialog from "../../components/customdialog";
 import Sidebar from "../../components/game-sidebar";
 import "./game.css";
+import { useParams } from 'react-router'
 
 function parseFEN(fen) {
   return fen.split(' ')[0].split('/').map(row => row.replace(/\d/g, num => '.'.repeat(num)));
@@ -32,48 +33,38 @@ function compareFEN(fen1, fen2) {
   return piece + to;
 }
 
-
 export default function Game() {
-
-  const [blackPlayer, setBlackPlayer] = useState("Black");
-  const [whitePlayer, setWhitePlayer] = useState("White");
-  const [difficulty, setDifficulty] = useState("default");
-  const [gameLink, setGameLink] = useState("");
-  const [whiteMove, setWhiteMove] = useState(""); // to_move from the API true if white's move
-  const [inputFEN, setInputFEN] = useState("r1b2rk1/1p1nqpb1/p2p1np1/2pP2Bp/P1N4P/2N3P1/1P1QPPB1/R3K2R w KQ - 2 16");
-  const [bestMoves, setBestMoves] = useState([{"eval": 1.5, "san": "Nc3", "uci": "b1c3"}]);
+  let { id } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+  const [inputFEN, setInputFEN] = useState("");
+  const [whitePlayer, setWhitePlayer] = useState("");
+  const [blackPlayer, setBlackPlayer] = useState("");
+  const [bestMoves, setBestMoves] = useState([]);
   const [GMmove, setGMmove] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [errorRaised, setErrorRaised] = useState(null);
 
+  useEffect(() => {
+    fetch('https://beat-a-gm-backend.vercel.app/puzzles/get/' + id)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Game fetched:', data);
 
-  useEffect( () => {
-    async function fetchData() {
-      await fetch("https://beat-a-gm-backend.vercel.app/puzzles")
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw response;
-        })
-        .then((data) => {
-          setBlackPlayer(data.black_username);
-          setWhitePlayer(data.white_username);
-          setDifficulty(data.difficulty);
-          setGameLink(data.game_link);
-          setWhiteMove(data.to_move);
-          setInputFEN(data.starting_pos);
-          setBestMoves(data.top_five);
-          setGMmove(data.gm_move);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setErrorRaised(error);
-        });
+        setInputFEN(data.fen);
+        setWhitePlayer(data.white_username);
+        setBlackPlayer(data.black_username);
+        setBestMoves(data.best_moves);
+        setGMmove(data.gm_move);
 
-    }
-    fetchData();
-  }, []);
+        setIsLoading(false); // Set loading to false after fetching
+      })
+      .catch(error => {
+        console.error('Error fetching Game:', error);
+      });
+  }, [id]);
 
 
   const chess = useMemo(() => new Chess(inputFEN), [inputFEN]);
@@ -112,8 +103,7 @@ export default function Game() {
 
     return true;
   }
-  if (loading) return <div>Loading...</div>;
-  if (errorRaised) return <div>Error: {errorRaised.message}</div>;
+  if (isLoading) return <div>Loading...</div>;
   // Game component returned jsx
   return (
     <>

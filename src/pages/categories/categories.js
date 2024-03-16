@@ -1,67 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './categories.css';
 
-export default function Categories() {
-    const categories = [
-        {
-            "href": "/categories/1",
-            "title": "Category 1",
-            "puzzles_ids": ["234", "235", "236", "237", "238"]
-        },
-        {
-            "href": "/categories/2",
-            "title": "Category 2",
-            "puzzles_ids": ["239", "240", "241", "242", "243"]
+export default function Categories({ games }) {
+    const [categories, setCategories] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-        },
-        {
-            "href": "/categories/3",
-            "title": "Category 3",
-            "puzzles_ids": ["244", "245", "246", "247", "248"]
-        },
-        {
-            "href": "/categories/4",
-            "title": "Category 4",
-            "puzzles_ids": ["249", "250", "251", "252", "253"]
-        },
-        {
-            "href": "/categories/5",
-            "title": "Category 5",
-            "puzzles_ids": ["254", "255", "256", "257", "258"]
-        },
-        {
-            "href": "/categories/6",
-            "title": "Category 6",
-            "puzzles_ids": ["259", "260", "261", "262", "263"]
-        }
-    ]
-        ;
+    useEffect(() => {
+        fetch('https://beat-a-gm-backend.vercel.app/categories')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Categories fetched:', data);
+                setCategories(data);
+                setIsLoading(false); // Set loading to false after fetching
+            })
+            .catch(error => {
+                console.error('Error fetching categories:', error);
+            });
+    }, []);
 
+    if (isLoading) {
+        return <div>Loading...</div>; // Show a loading indicator while fetching
+    }
 
     return (
         <div className="categoriespage">
             <div className="categories">
-                {
-                    categories.map(category => (
-                        <div className="category">
-                            <a href={category.href} >{category.title}</a>
-                            <ul>
-                                {category.puzzles_ids && category.puzzles_ids.length > 0 &&
-
-                                    category.puzzles_ids.map(id => (
-                                        <li>
-                                            <a href={category.href + "/" + id} key={id}>Puzzle {id}</a>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
+                {categories.map((category, index) => (
+                    <div key={index} className="category">
+                        <h1>{category}</h1>
+                        <div className="games">
+                            {games.filter(game => game.category === category).map((game, index) => (
+                                <div key={index} className="game">
+                                    <a href={"/play/" + game.id}>{game.white_username} vs {game.black_username} {game.id}</a>
+                                </div>
+                            ))}
                         </div>
-                    ))
-                }
-
+                    </div>
+                ))}
             </div>
-
-
         </div>
     );
 }
