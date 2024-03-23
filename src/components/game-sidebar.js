@@ -36,11 +36,8 @@ const Sidebar = ({ whitePlayer, blackPlayer, userMove, stockFishMoves, gmMove })
         return mappedMoves;
     }
 
-
-
-
     useEffect(() => {
-        if (!!userMove) {
+        if (userMove) {
             setSubmitEnabled(true);
         }
     }, [userMove]);
@@ -52,13 +49,23 @@ const Sidebar = ({ whitePlayer, blackPlayer, userMove, stockFishMoves, gmMove })
     return (
         <div className="sidebar">
             <Stack spacing={1}>
-                <Item>
-                    <img src={getImage(blackPlayer)} alt="black player" width="100px" />
-                    <p>Black: {blackPlayer}</p>
-                    <p>vs</p>
-                    <img src={getImage(whitePlayer)} alt="white player" width="100px" />
+                <div style={
+                    {
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }
+
+                }>
+                    <img src={getImage(whitePlayer)} alt="white player" width="50px" />
                     <p>White: {whitePlayer}</p>
-                </Item>
+                    <p>vs</p>
+                    <img src={getImage(blackPlayer)} alt="black player" width="50px" />
+                    <p>Black: {blackPlayer}</p>
+                    
+
+                </div>
                 <Item><h3>Your Move</h3>
                     {
                         userMove ? (

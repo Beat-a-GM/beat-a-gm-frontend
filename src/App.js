@@ -2,17 +2,16 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ChessNavbar from "./components/navbar";
 import Home from "./pages/home/home";
-import Game from "./pages/game/game";
+import GamePage from "./pages/game/game-page";
 import AboutUs from "./pages/aboutus/aboutus";
 import "./App.css";
 import Categories from "./pages/categories/categories";
-import react from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const App = () => {
 
-  const [puzzles, setPuzzles] = react.useState([]);
-  const [loading, setLoading] = react.useState(true);
+  const [puzzles, setPuzzles] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('https://beat-a-gm-backend.vercel.app/puzzles')
@@ -33,6 +32,9 @@ const App = () => {
       });
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className="screen">
@@ -40,9 +42,9 @@ const App = () => {
       <div className="excludenav">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/play/:id" element={<Game/>} />
+          <Route path="/play/:id" element={<GamePage />} />
           <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/categories" element={<Categories games = {puzzles}/>} />
+          <Route path="/categories" element={<Categories games={puzzles} />} />
         </Routes>
       </div>
     </div>
