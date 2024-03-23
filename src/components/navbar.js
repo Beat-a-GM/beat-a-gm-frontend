@@ -23,7 +23,7 @@ export default function ChessNavbar() {
             <Nav className="ms-auto">
               <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/categories">Select Puzzle</Nav.Link>
-              <Nav.Link href="/play">Play</Nav.Link>
+              {/* <Nav.Link href="/play">Play</Nav.Link> */}
 
 
               {/* News Button */}
