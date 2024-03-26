@@ -5,10 +5,12 @@
     align-items: center;
     color: #000000;
     height: 100%;
-    background-color: wheat;
+    background-color: white;
   }
 .board {
     margin-right: 15px;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 .gamesidebar {
     position: relative;

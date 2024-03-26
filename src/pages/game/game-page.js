@@ -12,7 +12,7 @@ export default function GamePage() {
     const [blackPlayer, setBlackPlayer] = useState("");
     const [bestMoves, setBestMoves] = useState([]);
     const [GMmove, setGMmove] = useState("");
-
+    const [toMove, setToMove] = useState(false);//true for white, false for black
 
 
     useEffect(() => {
@@ -31,7 +31,7 @@ export default function GamePage() {
                 setBlackPlayer(data.black_username);
                 setBestMoves(data.top_five);
                 setGMmove(data.gm_move);
-
+                setToMove(data.to_move);
                 setLoading(false);
             })
             .catch(error => {
@@ -43,9 +43,11 @@ export default function GamePage() {
     if (loading) {
         return <div>Loading...</div>
     }
+    console.log('toMove in GamePage:', toMove); // Debugging line
+
     return (
 
-        <Game inputFEN={inputFEN} whitePlayer={whitePlayer} blackPlayer={blackPlayer} bestMoves={bestMoves} GMmove={GMmove} />
+        <Game inputFEN={inputFEN} whitePlayer={whitePlayer} blackPlayer={blackPlayer} bestMoves={bestMoves} GMmove={GMmove} toMove={toMove} />
 
     );
 }

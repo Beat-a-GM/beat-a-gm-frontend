@@ -6,8 +6,9 @@ import Sidebar from "../../components/game-sidebar";
 import { compareFEN } from "../../utils/fen";
 import "./game.css";
 
-export default function Game( { inputFEN, whitePlayer, blackPlayer, bestMoves, GMmove } ) {
-
+export default function Game( { inputFEN, whitePlayer, blackPlayer, bestMoves, GMmove, toMove } ) {
+  console.log('toMove:', toMove); // Debugging line
+  // Chess instance
   const chess = useMemo(() => new Chess(inputFEN), [inputFEN]);
   const [fen, setFen] = useState(chess.fen());
   const [over, setOver] = useState("");
@@ -52,6 +53,9 @@ export default function Game( { inputFEN, whitePlayer, blackPlayer, bestMoves, G
           position={fen} 
           onPieceDrop={onDrop} 
           boardWidth={650}
+          boardOrientation={toMove?"white":"black"}
+          customLightSquareStyle={{backgroundColor: "#f0d9b5"}}
+          customDarkSquareStyle={{backgroundColor: "#b58863"}}
           />
         </div>
           <Sidebar
